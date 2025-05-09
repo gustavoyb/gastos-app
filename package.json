@@ -21,13 +21,17 @@
     "typeorm": "typeorm-ts-node-commonjs",
     "migration:generate": "npm run typeorm migration:generate -- -d src/config/typeorm.config.ts",
     "migration:run": "npm run typeorm migration:run -- -d src/config/typeorm.config.ts",
-    "migration:revert": "npm run typeorm migration:revert -- -d src/config/typeorm.config.ts"
+    "migration:revert": "npm run typeorm migration:revert -- -d src/config/typeorm.config.ts",
+    "seed": "ts-node -r tsconfig-paths/register src/scripts/categories-seed.ts"
   },
   "dependencies": {
     "@nestjs/common": "^11.0.1",
     "@nestjs/core": "^11.0.1",
+    "@nestjs/mapped-types": "^2.1.0",
     "@nestjs/platform-express": "^11.0.1",
     "@nestjs/typeorm": "^11.0.0",
+    "class-transformer": "^0.5.1",
+    "class-validator": "^0.14.2",
     "dotenv": "^16.5.0",
     "pg": "^8.15.6",
     "reflect-metadata": "^0.2.2",

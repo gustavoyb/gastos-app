@@ -5,6 +5,7 @@ import { AppService } from './app.service';
 import { CategoryModule } from './modules/category/category.module';
 import { CategoryTypeModule } from './modules/category-type/category-type.module';
 import { SubcategoryModule } from './modules/subcategory/subcategory.module';
+import { DatabaseModule } from './database/database.module';
 
 @Module({
   imports: [
@@ -22,7 +23,8 @@ import { SubcategoryModule } from './modules/subcategory/subcategory.module';
     }),
     CategoryModule,
     CategoryTypeModule,
-    SubcategoryModule
+    SubcategoryModule,
+    DatabaseModule
   ],
   controllers: [AppController],
   providers: [AppService],
