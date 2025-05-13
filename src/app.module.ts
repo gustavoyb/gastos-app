@@ -6,21 +6,46 @@ import { CategoryModule } from './modules/category/category.module';
 import { CategoryTypeModule } from './modules/category-type/category-type.module';
 import { SubcategoryModule } from './modules/subcategory/subcategory.module';
 import { DatabaseModule } from './database/database.module';
+import { ConfigModule, ConfigService } from '@nestjs/config';
+import * as Joi from 'joi';
+import { UserModule } from './modules/user/user.module';
+import { AuthModule } from './modules/auth/auth.module';
 
 @Module({
   imports: [
-    TypeOrmModule.forRoot({
-      type: 'postgres',
-      host: process.env.DB_HOST || 'localhost',
-      port: parseInt(process.env.DB_PORT ?? '5432'),
-      username: process.env.DB_USERNAME || 'postgres',
-      password: process.env.DB_PASSWORD || 'admin',
-      database: process.env.DB_DATABASE || 'postgres',
-      entities: [__dirname + '/**/*.entity{.ts,.js}'],
-      synchronize: process.env.NODE_ENV !== 'production', // No usar en producción
-      migrations: [__dirname + '/migrations/**/*{.ts,.js}'],
-      migrationsRun: true,
+    ConfigModule.forRoot({
+      isGlobal: true,
+      envFilePath: '.env',
+      validationSchema: Joi.object({
+        NODE_ENV: Joi.string()
+          .valid('development', 'production', 'test')
+          .default('development'),
+        PORT: Joi.number().default(3000),
+        DB_HOST: Joi.string().default('localhost'),
+        DB_PORT: Joi.number().default(5432),
+        DB_USERNAME: Joi.string().default('postgres'),
+        DB_PASSWORD: Joi.string().default('admin'),
+        DB_DATABASE: Joi.string().default('postgres'),
+        JWT_SECRET: Joi.string().default('temporary_secret_key_change_in_production'),
+      })
     }),
+    TypeOrmModule.forRootAsync({
+      inject: [ConfigService],
+      useFactory: (configService: ConfigService) => ({
+        type: 'postgres',
+        host: configService.get<string>('DB_HOST'),
+        port: configService.get<number>('DB_PORT'),
+        username: configService.get<string>('DB_USERNAME'),
+        password: configService.get<string>('DB_PASSWORD'),
+        database: configService.get<string>('DB_DATABASE'),
+        entities: [__dirname + '/**/*.entity{.ts,.js}'],
+        synchronize: configService.get<string>('NODE_ENV') !== 'production',
+        migrations: [__dirname + '/migrations/**/*{.ts,.js}'],
+        migrationsRun: true,
+      })
+    }),
+    UserModule,
+    AuthModule,
     CategoryModule,
     CategoryTypeModule,
     SubcategoryModule,
