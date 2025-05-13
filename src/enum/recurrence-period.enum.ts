@@ -1,0 +1,9 @@
+export enum RecurrencePeriodEnum {
+    DAILY = 'DAILY',
+    WEEKLY = 'WEEKLY',
+    BIWEEKLY = 'BIWEEKLY',
+    MONTHLY = 'MONTHLY',
+    QUARTERLY = 'QUARTERLY',
+    SEMIANNUALLY = 'SEMIANNUALLY',
+    ANNUALLY = 'ANNUALLY'
+}

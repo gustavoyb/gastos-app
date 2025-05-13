@@ -11,6 +11,7 @@ import * as Joi from 'joi';
 import { UserModule } from './modules/user/user.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { AccountModule } from './modules/account/account.module';
+import { TransactionModule } from './modules/transaction/transaction.module';
 
 @Module({
   imports: [
@@ -51,7 +52,8 @@ import { AccountModule } from './modules/account/account.module';
     CategoryTypeModule,
     SubcategoryModule,
     DatabaseModule,
-    AccountModule
+    AccountModule,
+    TransactionModule
   ],
   controllers: [AppController],
   providers: [AppService],

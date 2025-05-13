@@ -2,6 +2,7 @@ import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, PrimaryGenerat
 import { Subcategory } from "../../subcategory/entities/subcategory.entity";
 import { User } from "../../user/entities/user.entity";
 import { Account } from "../../account/entitites/account.entity";
+import { RecurrencePeriodEnum } from "src/enum/recurrence-period.enum";
 
 @Entity('transaction')
 export class Transaction {
@@ -32,8 +33,12 @@ export class Transaction {
     @Column({ default: false })
     is_recurring: boolean;
 
-    @Column({ nullable: true })
-    recurrence_period: string; // 'monthly', 'weekly', 'yearly', etc.
+    @Column({
+        nullable: true,
+        type: 'enum',
+        enum: RecurrencePeriodEnum
+    })
+    recurrence_period: RecurrencePeriodEnum;
 
     @Column({ nullable: true })
     notes: string;

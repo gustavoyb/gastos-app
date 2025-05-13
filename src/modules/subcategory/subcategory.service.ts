@@ -1,4 +1,4 @@
-import { Injectable } from "@nestjs/common";
+import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Subcategory } from "./entities/subcategory.entity";
 import { Repository } from "typeorm";
@@ -26,5 +26,13 @@ export class SubcategoryService {
         });
 
         return this.subcategoryRepository.save(subcategory);
+    }
+
+    async findOne(id: number): Promise<Subcategory> {
+        const user = await this.subcategoryRepository.findOne({ where: { id } });
+        if (!user) {
+            throw new NotFoundException(`Subcategoría con ID ${id} no encontrado`);
+        }
+        return user;
     }
 }
