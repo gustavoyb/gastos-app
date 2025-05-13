@@ -1,15 +1,28 @@
 # Sistema de Gestión de Gastos
 
-Este es un sistema backend desarrollado con NestJS para la gestión de gastos personales o empresariales. El sistema permite gestionar usuarios, cuentas, categorías, subcategorías y transacciones.
+Sistema backend desarrollado con NestJS para la gestión de gastos personales o empresariales. Permite gestionar usuarios, cuentas, categorías, subcategorías y transacciones con un sistema completo de autenticación y autorización.
 
-## 🚀 Tecnologías
+## 🚀 Características Principales
+
+- 🔐 Autenticación JWT y control de roles
+- 👥 Gestión de usuarios
+- 💰 Gestión de cuentas y saldos
+- 📊 Categorización de gastos e ingresos
+- 📈 Reportes y resúmenes financieros
+- 🔄 Transacciones recurrentes
+- 🏷️ Sistema de etiquetas
+- 📱 API RESTful
+
+## 🛠️ Tecnologías
 
 - NestJS 11
 - TypeScript
 - PostgreSQL
 - TypeORM
+- JWT para autenticación
 - Jest (Testing)
 - ESLint + Prettier
+- Joi para validación
 
 ## 📋 Prerrequisitos
 
@@ -33,11 +46,19 @@ npm install
 3. Configurar variables de entorno:
 Crear un archivo `.env` en la raíz del proyecto con las siguientes variables:
 ```env
-DATABASE_HOST=localhost
-DATABASE_PORT=5432
-DATABASE_USERNAME=tu_usuario
-DATABASE_PASSWORD=tu_contraseña
-DATABASE_NAME=gastos_db
+# Base de datos
+DB_HOST=localhost
+DB_PORT=5432
+DB_USERNAME=tu_usuario
+DB_PASSWORD=tu_contraseña
+DB_DATABASE=gastos_db
+
+# JWT
+JWT_SECRET=tu_clave_secreta_muy_segura
+
+# Entorno
+NODE_ENV=development
+PORT=3000
 ```
 
 4. Ejecutar migraciones:
@@ -72,6 +93,7 @@ src/
 ├── enum/          # Enumeraciones
 ├── modules/       # Módulos de la aplicación
 │   ├── account/   # Gestión de cuentas
+│   ├── auth/      # Autenticación y autorización
 │   ├── category/  # Gestión de categorías
 │   ├── category-type/ # Tipos de categorías
 │   ├── subcategory/   # Subcategorías
@@ -80,6 +102,48 @@ src/
 ├── scripts/       # Scripts de utilidad
 └── main.ts        # Punto de entrada de la aplicación
 ```
+
+## 📝 API Endpoints
+
+### Autenticación
+- `POST /users/login` - Iniciar sesión
+- `POST /users` - Registrar nuevo usuario
+
+### Usuarios
+- `GET /users/profile` - Obtener perfil del usuario actual
+- `GET /users/:id` - Obtener usuario por ID
+- `PATCH /users/:id` - Actualizar usuario
+- `DELETE /users/:id` - Eliminar usuario
+
+### Cuentas
+- `POST /accounts` - Crear cuenta
+- `GET /accounts` - Listar cuentas
+- `GET /accounts/:id` - Obtener cuenta por ID
+- `PATCH /accounts/:id` - Actualizar cuenta
+- `DELETE /accounts/:id` - Eliminar cuenta
+
+### Categorías
+- `POST /categories` - Crear categoría
+- `GET /categories` - Listar categorías
+- `GET /categories/:id` - Obtener categoría por ID
+- `PATCH /categories/:id` - Actualizar categoría
+- `DELETE /categories/:id` - Eliminar categoría
+
+### Subcategorías
+- `POST /subcategories` - Crear subcategoría
+- `GET /subcategories` - Listar subcategorías
+- `GET /subcategories/:id` - Obtener subcategoría por ID
+- `PATCH /subcategories/:id` - Actualizar subcategoría
+- `DELETE /subcategories/:id` - Eliminar subcategoría
+
+### Transacciones
+- `POST /transactions` - Crear transacción
+- `GET /transactions` - Listar transacciones (con filtros)
+- `GET /transactions/:id` - Obtener transacción por ID
+- `PATCH /transactions/:id` - Actualizar transacción
+- `DELETE /transactions/:id` - Eliminar transacción
+- `GET /transactions/summary/category` - Resumen por categoría
+- `GET /transactions/summary/monthly` - Resumen mensual
 
 ## 🧪 Testing
 
@@ -107,6 +171,15 @@ npm run test:e2e
 - `npm run migration:run`: Ejecuta las migraciones pendientes
 - `npm run migration:revert`: Revierte la última migración
 - `npm run seed`: Ejecuta el seed de categorías
+
+## 🔒 Seguridad
+
+- Autenticación mediante JWT
+- Control de acceso basado en roles
+- Validación de datos con class-validator
+- Protección contra inyección SQL
+- Sanitización de entradas
+- Variables de entorno para datos sensibles
 
 ## 🤝 Contribución
 
