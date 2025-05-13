@@ -10,6 +10,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import * as Joi from 'joi';
 import { UserModule } from './modules/user/user.module';
 import { AuthModule } from './modules/auth/auth.module';
+import { AccountModule } from './modules/account/account.module';
 
 @Module({
   imports: [
@@ -49,7 +50,8 @@ import { AuthModule } from './modules/auth/auth.module';
     CategoryModule,
     CategoryTypeModule,
     SubcategoryModule,
-    DatabaseModule
+    DatabaseModule,
+    AccountModule
   ],
   controllers: [AppController],
   providers: [AppService],
