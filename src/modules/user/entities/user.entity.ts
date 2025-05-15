@@ -74,13 +74,17 @@ export class User {
 
     // Hash de contraseña antes de insertar o actualizar
     @BeforeInsert()
-    @BeforeUpdate()
     async hashPassword() {
-        // Solo aplicar hash si la contraseña ha sido modificada
         if (this.password) {
             const salt = await bcrypt.genSalt();
             this.password = await bcrypt.hash(this.password, salt);
         }
+    }
+
+    // Método para actualizar la contraseña
+    async updatePassword(newPassword: string) {
+        const salt = await bcrypt.genSalt();
+        this.password = await bcrypt.hash(newPassword, salt);
     }
 
     // Método para validar contraseña
