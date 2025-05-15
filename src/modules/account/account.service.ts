@@ -113,7 +113,8 @@ export class AccountService {
      */
     async updateBalance(id: number, amount: number, userId: number): Promise<Account> {
         const account = await this.findOne(id, userId);
-        account.current_balance += amount;
+        const newBalance = Number(account.current_balance) + Number(amount);
+        account.current_balance = newBalance;
 
         return this.accountRepository.save(account);
     }
